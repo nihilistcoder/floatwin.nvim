@@ -1,4 +1,5 @@
 -- vim:foldmethod=marker:foldlevel=0
+local strwidth = vim.fn['strwidth']
 
 -- highlight {{{1
 
@@ -255,10 +256,11 @@ function M.float(text, user_opts)
         vim.api.nvim_buf_add_highlight(buf, -1, border_highlight, linenr, opts.width-3, -1)
 
         local line_len = string.len(line)
+        local mbyte_diff = line_len - strwidth(line)
         -- we need to offset by 3 because nvim_buf_set_text() uses
         -- byte offsets, and the border characters uses 3 bytes in
         -- utf-8
-        vim.api.nvim_buf_set_text(buf, linenr, 3, linenr, line_len+3, {line})
+        vim.api.nvim_buf_set_text(buf, linenr, 3, linenr, line_len-mbyte_diff+3, {line})
         vim.api.nvim_buf_add_highlight(buf, -1, text_highlight, linenr, 3, opts.width+3)
     end
 
