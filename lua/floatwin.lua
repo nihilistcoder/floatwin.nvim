@@ -259,7 +259,7 @@ function M.float(text, user_opts)
         -- byte offsets, and the border characters uses 3 bytes in
         -- utf-8
         vim.api.nvim_buf_set_text(buf, linenr, 3, linenr, line_len+3, {line})
-        vim.api.nvim_buf_add_highlight(buf, -1, text_highlight, linenr, 3, line_len+3)
+        vim.api.nvim_buf_add_highlight(buf, -1, text_highlight, linenr, 3, opts.width+3)
     end
 
     local handle = vim.api.nvim_open_win(buf, enter, opts)
