@@ -1,10 +1,12 @@
 -- vim:foldmethod=marker:foldlevel=0
+
 -- highlight {{{1
 
-vim.api.nvim_create_augroup('floatwin_windows', {clear = false})
+vim.api.nvim_create_augroup('floatwin_highlight', {clear = false})
 
 local function highlight(hi)
-    vim.cmd('highlight ' .. table.concat(hi, ' '))
+    local command = 'highlight ' .. table.concat(hi, ' ')
+    vim.api.nvim_create_autocmd('ColorScheme', {pattern = '*', command = command})
 end
 
 local g = vim.g
@@ -103,6 +105,7 @@ end
 -- 1}}}
 
 local M = {}
+vim.api.nvim_create_augroup('floatwin_windows', {clear = false})
 
 local opened_windows = {}
 
