@@ -204,7 +204,7 @@ function M.float(text, user_opts)
         win_width = ui.width
         -- decrement the size of the statuline + command-line
         -- so that the window will be centered in the text area
-        win_height = ui.height - 3
+        win_height = ui.height - 1 - vim.o.cmdheight
     else
         win_width = vim.api.nvim_win_get_width(0) - vim.wo.numberwidth
         win_height = vim.api.nvim_win_get_height(0)
