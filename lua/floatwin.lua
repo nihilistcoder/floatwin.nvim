@@ -126,10 +126,6 @@ local range = vim.fn['range']
 
 local function construct_border(width, height, border, title)
     local title_len = string.len(title)
-    if title_len > (width - 2) then
-        local needed_width = tostring(title_len + 2)
-        error('title too big for window: at least '..needed_width..' width is required', 3)
-    end
 
     local repeat_num = (width-2) - title_len
     local h_border_top = border[1] .. title .. _repeat(border[2], repeat_num) ..border[3]
@@ -216,17 +212,22 @@ function M.float(text, user_opts)
         longest_line = (len > longest_line) and len or longest_line
     end
 
+    local title = ''
+
+    if user_opts and user_opts.title then
+        title = ' ' .. user_opts.title .. ' '
+    end
+
+    local title_len = string.len(title)
+    if title_len > longest_line then
+        longest_line = title_len
+    end
+
     opts.width = longest_line + 2 -- increment the border size
     opts.height = #text + 2 -- increment the border size
 
     if opts.width > win_width or opts.height > win_height then
         error('floating window too big for current window')
-    end
-
-    local title = ''
-
-    if user_opts and user_opts.title then
-        title = ' ' .. user_opts.title .. ' '
     end
 
     local border = construct_border(opts.width, opts.height, rounded_border, title)
